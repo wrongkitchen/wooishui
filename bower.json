@@ -1,0 +1,22 @@
+{
+  "name": "wooishui",
+  "version": "0.0.0",
+  "authors": [
+    "kenji@sekgamdong.com"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pure": "~0.5.0"
+  }
+}

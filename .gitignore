@@ -1,14 +1,10 @@
 node_modules
 *.log
 *.DS_Store
-dist
 
 .ftppass
 public/bower_components
-public/video/*
 public/styles/*.css
-client/.serve
 .tmp
 .grunt
 .sublime-grunt.cache
-bak
