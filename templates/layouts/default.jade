@@ -13,13 +13,15 @@ html
 		link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
 
 		//- Customise the stylesheet for your site by editing /public/styles/site.sass
+		link(href="https://fontastic.s3.amazonaws.com/CWNp47vRfsX6Apg6FPgnZg/icons.css", rel="stylesheet")
 		link(href="http://fonts.googleapis.com/css?family=Poiret+One", rel="stylesheet")
 		link(href="/bower_components/pure/pure-min.css", rel="stylesheet")
+		link(href="/bower_components/framework7/dist/css/framework7.min.css", rel="stylesheet")
 
 		link(href="/styles/site.css", rel="stylesheet")
 
 		//- This file provides the default styling for the KeystoneJS Content Editor
-		if user && user.canAccessKeystone
+		if admin && admin.canAccessKeystone
 			link(href="/keystone/styles/content/editor.min.css", rel="stylesheet")
 
 		//- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
@@ -37,24 +39,28 @@ html
 
 	//- HTML BODY
 	body
-		div#layout
+		//- div.panel-overlay
+		//- div#menu.panel.panel-left.panel-cover
+		//- 	div.userDetail
+		//- 		div.img.pure-u-2-5(style="background-image:url(http://graph.facebook.com/#{user.id}/picture)")
+		//- 		div.name.pure-u-3-5 #{user.name}
+		//- 	ul
+		//- 		each link in navLinks
+		//- 			li(class=(section == link.key ? 'active' : null)): a(href=link.href, class=((link.external) ? 'external' : 'internal'))= link.label
+		div#layout.views
 			//- HEADER
-			#header
-				a#menuLink.menu-link(href="#menu")
-				div#menu
-					div.pure-menu.pure-menu-open
-						a.pure-menu-heading(href='/') wooishui
-						ul
-							each link in navLinks
-								li(class=(section == link.key ? 'active' : null)): a(href=link.href)= link.label
-							if user
-								if user.canAccessKeystone
-									li: a(href='/keystone') Open Keystone
-								li: a(href='/keystone/signout') Sign Out
-							else
-								li: a(href='/keystone/signin') Sign In
-			//- BODY
-			#main
+			div.view.view-main
+				div#header
+					div.navbar
+						div.navbar-inner
+							div.left
+								a.headerBtn.menu-link.icon-share-square(href="#")
+							div.center
+							div.right
+								a#cancelBtn.headerBtn.txt(onclick="sgd.changeSection('home')") Cancel
+								a#backBtn.headerBtn.txt(onclick="sgd.changeSection('home')") Back
+								a#addBtn.icon-plus.headerBtn.active(onclick="sgd.changeSection('form')")
+				//- BODY
 
 				//- NOTE:
 				//- There is no .container wrapping class around body blocks to allow more flexibility in design.
@@ -74,19 +80,30 @@ html
 				#footer
 					p Powered by <a href="http://www.sekgamdong.com" target="_blank">SEKGAMDONG CO.</a>.
 
+		block panel
 
 		//- JAVASCRIPT
 
 		//- jQuery 1.11.1 is included by default, and required by both Bootstrap
 		//- and the KeystoneJS Content Editor. If you are not targeting IE8,
 		//- you can upgrade to 2.1.1 (also bundled) for better performance.
+		script.
+			window.sgd = (window.sgd) ? window.sgd : {};
+			window.sgd.fbAppID = '#{fbAppID}';
+			window.sgd.userUID = '#{user.id}';
 		script(src='/bower_components/jquery/dist/jquery.min.js')
-		script(src='/js/pure-layout-side-menu/js/ui.js')
+		script(src='/bower_components/underscore/underscore-min.js')
+		script(src='/bower_components/backbone/backbone.js')
+		script(src='/bower_components/framework7/dist/js/framework7.min.js')
+		//- script(src='/js/pure-layout-side-menu/js/ui.js')
+		script(src='/bower_components/requirejs/require.js')
+		script(src='/js/config.js')
+		script(src='/js/main.js')
 
 
 		//- The KeystoneJS Content Editor provides support for ks-editable data attributes,
 		//- which generate links to edit content for users who can access Keystone
-		if user && user.canAccessKeystone
+		if admin && admin.canAccessKeystone
 			script(src='/keystone/js/content/editor.js')
 
 		//- Add scripts that are globally required by your site here.

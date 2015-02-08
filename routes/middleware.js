@@ -24,14 +24,17 @@ exports.initLocals = function(req, res, next) {
 	var locals = res.locals;
 	
 	locals.navLinks = [
-		{ label: 'Home',		key: 'home',		href: '/main' },
-		{ label: 'Contact',		key: 'contact',		href: '/contact' }
+		{ label: 'Home',		key: 'home',		href: 'home' },
+		{ label: 'About',		key: 'about',		href: 'about' },
+		// { label: 'Contact',		key: 'contact',		href: '/contact' },
+		{ label: 'Logout',		key: 'logout',		href: '/logout', external: true }
 	];
-	
-	locals.user = req.user;
+	locals.admin = req.user;
+	locals.fbAppID = process.env.FACEBOOK_APP_ID;
 
 	locals.checkUser = function(pSuccess){
 		var curUser = req.session.passport.user;
+		locals.user = curUser;
 		if(curUser)
 			pSuccess();
 		else

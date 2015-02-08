@@ -32,10 +32,10 @@ keystone.pre('routes', passport.session());
 keystone.pre('render', middleware.flashMessages);
 
 passport.serializeUser(function (pUser, pCallback) {
-	pCallback(null, pUser.uid);
+	pCallback(null, { id: pUser.uid, name: pUser.name });
 });
-passport.deserializeUser(function (pID, pCallback) {  
-	Users.findOne(pID, pCallback);
+passport.deserializeUser(function (pUser, pCallback) {  
+	Users.findOne(pUser, pCallback);
 });
 passport.use(new FacebookStrategy({
 		clientID: process.env.FACEBOOK_APP_ID,
@@ -48,6 +48,7 @@ passport.use(new FacebookStrategy({
 
 // Import Route Controllers
 var routes = {
+	api: importRoutes('./api'),
 	views: importRoutes('./views')
 };
 // Setup Route Bindings
@@ -55,10 +56,12 @@ exports = module.exports = function(app) {
 	
 	// Views
 	app.get('/', routes.views.index);
-	app.get('/auth/facebook', passport.authenticate('facebook'));
+	app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['public_profile', 'user_friends'] }));
 	app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/main', failureRedirect: '/' }));
+	app.all('/logout', function(req, res){ req.logout(); res.redirect('/'); });
 	app.all('/main', routes.views.main);
 	app.all('/contact', routes.views.contact);
+	app.all('/api/debtsCredits', routes.api.debtsCredits);
 	
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);
