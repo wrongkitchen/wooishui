@@ -8,3 +8,5 @@ public/styles/*.css
 .tmp
 .grunt
 .sublime-grunt.cache
+.env
+.sass-cache
