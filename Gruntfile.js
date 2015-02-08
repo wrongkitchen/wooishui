@@ -67,9 +67,10 @@ module.exports = function(grunt) {
 
 		nodemon: {
 			debug: {
-				script: 'keystone.js',
+				script: 'keystone.js', 
 				options: {
 					nodeArgs: ['--debug'],
+					watch: ['models', 'routes', 'Gruntfile.js', 'keystone.js'],
 					env: {
 						port: config.port
 					}
