@@ -68,7 +68,7 @@ define(function(){
 					var modelDebts = this.options.credits.where({ debtorsUID : cid });
 					creditsDetail.reset();
 					creditsDetail.add(modelCredits.concat(modelDebts));
-					sgd.changeSection('deail');
+					sgd.changeSection('detail');
 				}
 			});
 			var _creditDetailView = Backbone.View.extend({
