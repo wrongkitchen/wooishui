@@ -22,8 +22,6 @@ define(function(){
 			var creditsDetail = new _creditsDetail();
 			var _creditView = Backbone.View.extend({
 				el: '#dataList',
-				debtsTemplate: _.template($("#debtsTmpl").html()),
-				creditsTemplate: _.template($("#creditsTmpl").html()),
 				mainListTemplate: _.template($("#mainListTmpl").html()),
 				events: {
 					'click .item-content' : 'showDetail'
@@ -75,11 +73,13 @@ define(function(){
 			});
 			var _creditDetailView = Backbone.View.extend({
 				el: '#dataListDetail',
-				debtsTemplate: _.template($("#debtsTmpl").html()),
-				creditsTemplate: _.template($("#creditsTmpl").html()),
+				detailTemplate: _.template($("#detailTmpl").html()),
 				initialize: function(options){
 					this.options = options;
 					this.listenTo(this.options.credits, 'all', this.render);
+				},
+				events: {
+					'click .settleBtn' : 'settleItem'
 				},
 				render: function(){
 					var _view = this;
@@ -87,9 +87,26 @@ define(function(){
 					_view.options.credits.each(function(credit){
 						var obj = credit.toJSON();
 						if(obj.creditorUID == _this.userUID){
-							_view.$el.append(_view.creditsTemplate(obj));
+							obj.creatorName = (obj.creatorUID == _this.userUID) ? obj.creditorName.first + " " + obj.creditorName.last : obj.debtorsName.first + " " + obj.debtorsName.last;
 						} else {
-							_view.$el.append(_view.debtsTemplate(obj));
+							obj.price *= -1;
+							obj.creatorName = (obj.creatorUID == _this.userUID) ? obj.debtorsName.first + " " + obj.debtorsName.last : obj.creditorName.first + " " + obj.creditorName.last;
+						}
+						obj.settlable = (obj.creatorUID == _this.userUID) ? true : false;
+						_view.$el.append(_view.detailTemplate(obj));
+					});
+				},
+				settleItem: function(e){
+					var itemID = $(e.currentTarget).data('itemid');
+					$.ajax({
+						url: '/api/debtsSettle',
+						type: 'post',
+						data: { itemid: itemID },
+						success: function (data) {
+							if(data.status){
+								$("#item_" + itemID).remove();
+								_this.credits.fetch();
+							}
 						}
 					});
 				}
@@ -99,6 +116,7 @@ define(function(){
 				credits: _this.credits
 			});
 			creditView.comparator = 'createdAt';
+
 			var creditDetailView = new _creditDetailView({
 				credits: creditsDetail
 			});

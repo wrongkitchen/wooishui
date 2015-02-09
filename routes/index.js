@@ -62,6 +62,7 @@ exports = module.exports = function(app) {
 	app.all('/main', routes.views.main);
 	app.all('/contact', routes.views.contact);
 	app.all('/api/debtsCredits', routes.api.debtsCredits);
+	app.all('/api/debtsSettle', routes.api.settle);
 	
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);

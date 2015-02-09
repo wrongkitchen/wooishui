@@ -15,7 +15,7 @@ html
 		//- Customise the stylesheet for your site by editing /public/styles/site.sass
 		link(href="https://fontastic.s3.amazonaws.com/CWNp47vRfsX6Apg6FPgnZg/icons.css", rel="stylesheet")
 		link(href="http://fonts.googleapis.com/css?family=Quicksand:400,700", rel="stylesheet")
-		link(href="/bower_components/pure/pure-min.css", rel="stylesheet")
+		link(href="http://fonts.googleapis.com/css?family=Lobster", rel="stylesheet")
 		link(href="/bower_components/framework7/dist/css/framework7.min.css", rel="stylesheet")
 
 		link(href="/styles/site.css", rel="stylesheet")
@@ -51,6 +51,7 @@ html
 			//- HEADER
 			div.view.view-main
 				div#header
+					div.logo wooishui
 					div.navbar
 						div.navbar-inner
 							div.left
@@ -94,8 +95,8 @@ html
 		script(src='/bower_components/jquery/dist/jquery.min.js')
 		script(src='/bower_components/underscore/underscore-min.js')
 		script(src='/bower_components/backbone/backbone.js')
+		script(src='/bower_components/momentjs/min/moment.min.js')
 		script(src='/bower_components/framework7/dist/js/framework7.min.js')
-		//- script(src='/js/pure-layout-side-menu/js/ui.js')
 		script(src='/bower_components/requirejs/require.js')
 		script(src='/js/config.js')
 		script(src='/js/main.js')

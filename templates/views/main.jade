@@ -11,7 +11,7 @@ block content
 
 		div.page.cached(data-page="deail", data-nav="back")
 			div.content-block-title Debts detail
-			div.list-block
+			div.list-block.media-list
 				ul#dataListDetail
 
 		div.page.cached(data-page="form", data-nav="cancel")
@@ -108,40 +108,28 @@ block panel
 		</li>
 	script#mainListTmpl(type="text/template").
 		<li class="item-content">
-			<% if(fbConnected){ %>
-				<div class="item-media" style="background-image:url(http://graph.facebook.com/<%=id%>/picture)"></div>
-			<% } %>
+			<div class="item-media" style="background-image:url(http://graph.facebook.com/<%=id%>/picture)"></div>
 			<div class="item-inner">
 				<div class="item-title"><%=name%></div>
 				<div class="item-label <%=(price > 0) ? 'color-green' : 'color-red'%>">$<%=price%></div>
 			</div>
 			<input type="hidden" class="cid" value="<%=id%>"></input>
 		</li>
-	script#debtsTmpl(type="text/template").
-		<li class="item-content">
-			<% if(fbConnected){ %>
-				<div class="item-media" style="background-image:url(http://graph.facebook.com/<%=creditorUID%>/picture)"></div>
-			<% } %>
-			<div class="item-inner">
-				<div class="item-title">
-					<%=creditorName.first%> <%=creditorName.last%>
+	script#detailTmpl(type="text/template").
+		<li class="swipeout" id="item_<%=_id%>">
+			<div class="item-link swipeout-content item-content">
+				<div class="item-inner">
+					<div class="item-title-row">
+						<div class="item-title"><%=moment(createdAt).format("YYYY-MM-DD HH:mm:SS")%></div>
+						<div class="item-after <%=(price > 0) ? 'color-green' : 'color-red'%>">$<%=price%></div>
+					</div>
+					<div class="item-subtitle"><%= creatorName %></div>
+					<div class="item-text"><%= desc || 'NO DESCRIPTION' %></div>
 				</div>
-				<div class="item-label color-red">-$<%=price%></div>
 			</div>
-			<input type="hidden" class="cid" value="<%=creditorUID%>"></input>
-			<input type="hidden" class="indexKey" value="creditorUID"></input>
-		</li>
-	script#creditsTmpl(type="text/template").
-		<li class="item-content">
-			<% if(fbConnected){ %>
-				<div class="item-media" style="background-image:url(http://graph.facebook.com/<%=creditorUID%>/picture)"></div>
-			<% } %>
-			<div class="item-inner">
-				<div class="item-title">
-					<%=debtorsName.first%> <%=debtorsName.last%>
+			<% if(settlable){ %>
+				<div class="swipeout-actions-right">
+					<a href="#" data-itemid="<%=_id%>" class="settleBtn bg-red">SETTLE</a>
 				</div>
-				<div class="item-label color-green">$<%=price%></div>
-			</div>
-			<input type="hidden" class="cid" value="<%=debtorsUID%>"></input>
-			<input type="hidden" class="indexKey" value="debtorsUID"></input>
+			<% } %>
 		</li>

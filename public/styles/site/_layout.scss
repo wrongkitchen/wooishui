@@ -16,10 +16,17 @@ a{
 .container{ margin: 0 auto; padding: 0 2em; }
 #layout{ min-height:100%; }
 #header{ 
+	position:relative;
 	.navbar{ background-color: $main-theme-color; }
 	.left, .center, .right{ 
 		height:100%; 
 	}
+	.logo{ 
+		position:absolute; top:0; height:100%; width:98px; left:50%; 
+		margin-left:-49px; z-index:1000; font-size:28px;
+		font-family:'Lobster', cursive; color:#FFF; 
+	}
+	.center{ font-size:28px; }
 }
 #menu{ background-color: #FFF; border-right: 1px solid #BBB; }
 #footer { 
