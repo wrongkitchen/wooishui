@@ -12,9 +12,9 @@
 	color: rgba(255,255,255,1);
 	-o-text-overflow: clip;
 	text-overflow: clip;
-	background: -webkit-linear-gradient(45deg, rgba(255,255,255,0.2) 25%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 50%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.2) 75%, rgba(0,0,0,0) 75%, rgba(0,0,0,0) 0), rgb(170, 204, 0);
-	background: -moz-linear-gradient(45deg, rgba(255,255,255,0.2) 25%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 50%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.2) 75%, rgba(0,0,0,0) 75%, rgba(0,0,0,0) 0), rgb(170, 204, 0);
-	background: linear-gradient(45deg, rgba(255,255,255,0.2) 25%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 50%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.2) 75%, rgba(0,0,0,0) 75%, rgba(0,0,0,0) 0), rgb(170, 204, 0);
+	background: -webkit-linear-gradient(45deg, rgba(0,222,34,0.2) 25%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 50%, rgba(0,222,34,0.2) 50%, rgba(0,222,34,0.2) 75%, rgba(0,0,0,0) 75%, rgba(0,0,0,0) 0), rgb(120,255,141);
+	background: -moz-linear-gradient(45deg, rgba(0,222,34,0.2) 25%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 50%, rgba(0,222,34,0.2) 50%, rgba(0,222,34,0.2) 75%, rgba(0,0,0,0) 75%, rgba(0,0,0,0) 0), rgb(120,255,141);
+	background: linear-gradient(45deg, rgba(0,222,34,0.2) 25%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 50%, rgba(0,222,34,0.2) 50%, rgba(0,222,34,0.2) 75%, rgba(0,0,0,0) 75%, rgba(0,0,0,0) 0), rgb(120,255,141);
 	background-position: auto auto;
 	-webkit-background-origin: padding-box;
 	background-origin: padding-box;
@@ -23,7 +23,6 @@
 	-webkit-background-size: 50px 50px;
 	background-size: 50px 50px;
 }
-
 #header{
 	&.cancel{
 		#cancelBtn{ display:block; }  
