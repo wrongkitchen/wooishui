@@ -1,6 +1,6 @@
 html, body{ width:100%; height:100%; padding:0; margin:0; }
 body{ 
-	font-family: 'Poiret One', cursive; font-size:$font-size-base; position:relative; 
+	font-family: 'Quicksand', sans-serif; font-size:$font-size-base; position:relative; 
 	&.unauthorized{ 
 		background-color: $main-theme-color; 
 		#footer{ 
