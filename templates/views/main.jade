@@ -124,7 +124,7 @@ block panel
 						<div class="item-after <%=(price > 0) ? 'color-green' : 'color-red'%>">$<%=price%></div>
 					</div>
 					<div class="item-subtitle"><%= creatorName %></div>
-					<div class="item-text"><%= desc || 'NO DESCRIPTION' %></div>
+					<div class="item-text"><%= (typeof(desc) == 'undefined') ? 'NO DESCRIPTION' : desc %></div>
 				</div>
 			</div>
 			<% if(settlable){ %>

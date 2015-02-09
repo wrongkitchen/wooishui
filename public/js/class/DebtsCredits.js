@@ -93,6 +93,7 @@ define(function(){
 							obj.creatorName = (obj.creatorUID == _this.userUID) ? obj.debtorsName.first + " " + obj.debtorsName.last : obj.creditorName.first + " " + obj.creditorName.last;
 						}
 						obj.settlable = (obj.creatorUID == _this.userUID) ? true : false;
+						console.log(obj.desc);
 						_view.$el.append(_view.detailTemplate(obj));
 					});
 				},
