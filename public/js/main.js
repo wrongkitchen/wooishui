@@ -14,7 +14,6 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 		});
 		sgd.popupFriendList = new pfl({
 			wrapper: "#friendList",
-			templateID: "#popupFriendList",
 			inviteTarget: "#nonRegFriend",
 			friendTarget: "#regFriend",
 			getFriendHandler: function(pCallback){
@@ -35,7 +34,7 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 	};
 
 	$$('.menu-link').on('click', function () {
-    var buttons = [
+    	var buttons = [
 	        {
 	            text: 'Sign Out',
 	            onClick: function () {
@@ -55,16 +54,17 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 	$('#friendList').on('opened', function () {
 		sgd.popupFriendList.startLoading();
 	});
-	$("#friendListSearch").on('input', function(){
+	$(".friendListSearch").on('input', function(){
 		var curText = $(this).val();
+		var target = $(this).data('target');
 		if(curText != ""){
-			var filtered = $(".item-content").filter(function(pIndex, pEl){
+			var filtered = $(target + " .item-content").filter(function(pIndex, pEl){
 				return $(pEl).find(".item-title").text().indexOf(curText) > -1;
 			});
-			$(".item-content").hide();
+			$(target + " .item-content").hide();
 			filtered.show();
 		} else {
-			$(".item-content").show();
+			$(target + " .item-content").show();
 		}
 	});
 });

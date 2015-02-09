@@ -64,6 +64,23 @@ block content
 			
 block panel
 
+	div#inviteFriend.popup.page.navbar-fixed
+		div.navbar
+			div.navbar-inner
+				div.left
+				div.center Invite Friend
+				div.right 
+					a.headerBtn.black.icon-remove.close-popup(href="#")
+		
+		div.page-content
+			div.infinite-scroll
+				div.content-block
+					input.friendListSearch(type="text", placeholder="search", data-target="#nonRegFriend")
+				div#nonRegFriendWrapper
+					div.content-block-title FACEBOOK FRIEND LIST
+					div.list-block
+						ul#nonRegFriend
+
 	div#friendList.popup.page.navbar-fixed
 		div.navbar
 			div.navbar-inner
@@ -74,26 +91,20 @@ block panel
 		
 		div.page-content
 			div.infinite-scroll
-				
 				div.content-block
-					input#friendListSearch(type="text", placeholder="search")
-
-				div#regFriend
+					input.friendListSearch(type="text", placeholder="search", data-target="#regFriend")
+				div#regFriendWrapper
 					div.content-block-title WOOISHUI USER
 					div.list-block
-						ul
-				div#nonRegFriend
-					div.content-block-title FACEBOOK FRIEND LIST
-					div.list-block
-						ul
+						ul#regFriend
 
-	script#popupFriendList(type="text/template").
+	script#regFriendList(type="text/template").
 		<li class="item-content">
-			<div class="item-media" style='background-image:url(<%=picture.data.url%>)'></div>
+			<div class="item-media" style='background-image:url(http://graph.facebook.com/<%=id%>/picture)'></div>
 			<div class="item-inner">
 				<div class="item-title"><%=name%></div>
 			</div>
-			<input type="hidden" value="<%=id%> }}" class="inviteToken" />
+			<input type="hidden" value="<%=id%>" class="inviteToken" />
 		</li>
 	script#mainListTmpl(type="text/template").
 		<li class="item-content">
