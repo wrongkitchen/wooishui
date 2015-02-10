@@ -13,6 +13,16 @@ define([], function(){
 			var _regView = Backbone.View.extend({
 				el: _this.get('friendTarget'),
 				tmpl: _.template($("#regFriendList").html()),
+				events: {
+					'click .item-content' : 'recordUserID'
+				},
+				recordUserID: function(e){
+					var userID = $(e.currentTarget).data('userid');
+					if(userID)
+						$("#otherUserID").val(userID);
+					sgd.framework7.closeModal();
+					sgd.changeSection('form-second');
+				},
 				initialize: function(options){
 					var _view = this;
 					_view.options = options;

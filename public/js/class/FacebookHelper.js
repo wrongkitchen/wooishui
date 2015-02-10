@@ -1,7 +1,9 @@
 define([], function(){
 	return Backbone.Model.extend({
-		initialize: function(){
 
+		friendsCache: null,
+
+		initialize: function(){
 			var sgd = (window.sgd) ? window.sgd : {};
 			if(sgd.fbAppID){
 				window.fbAsyncInit = function() {
@@ -23,10 +25,15 @@ define([], function(){
 			}
 		},
 
-		getFriendList: function(pCallback){
-			FB.api('/me/friends', function(response) {
- 				pCallback(response);
-			});
+		getFriendList: function(pCallback, pReload){
+			if(this.friendsCache == null || pReload == true){
+				FB.api('/me/friends', function(response) {
+					this.friendsCache = response;
+	 				pCallback(response);
+				});
+			} else {
+				return pCallback(this.friendsCache);
+			}
 		},
 		getInvitableList: function(pCallback){
 			FB.api('/me/taggable_friends', function(response) {

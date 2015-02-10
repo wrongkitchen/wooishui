@@ -39,7 +39,7 @@ define(function(){
 						var checkDataModel = function(pObj, pIndexKey){
 							var dataModel = allData.where(pObj);
 							if(dataModel.length<=0){
-								var _name = (pIndexKey == 'debtorsUID') ? (obj.debtorsName.first + " " + obj.debtorsName.last) : (obj.creditorName.first + " " + obj.creditorName.last);
+								var _name = (pIndexKey == 'debtorsUID') ? (obj.debtorsName) : (obj.creditorName);
 								allData.add({ 
 									id: obj[pIndexKey],
 									name: _name,
@@ -87,13 +87,12 @@ define(function(){
 					_view.options.credits.each(function(credit){
 						var obj = credit.toJSON();
 						if(obj.creditorUID == _this.userUID){
-							obj.creatorName = (obj.creatorUID == _this.userUID) ? obj.creditorName.first + " " + obj.creditorName.last : obj.debtorsName.first + " " + obj.debtorsName.last;
+							obj.creatorName = (obj.creatorUID == _this.userUID) ? obj.creditorName : obj.debtorsName;
 						} else {
 							obj.price *= -1;
-							obj.creatorName = (obj.creatorUID == _this.userUID) ? obj.debtorsName.first + " " + obj.debtorsName.last : obj.creditorName.first + " " + obj.creditorName.last;
+							obj.creatorName = (obj.creatorUID == _this.userUID) ? obj.debtorsName : obj.creditorName;
 						}
 						obj.settlable = (obj.creatorUID == _this.userUID) ? true : false;
-						console.log(obj.desc);
 						_view.$el.append(_view.detailTemplate(obj));
 					});
 				},

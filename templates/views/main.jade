@@ -22,7 +22,7 @@ block content
 						div.item-inner
 							div.item-title.label Name
 							div.item-input
-								input(type="text", placeholder="Name")
+								input#otherUserName(type="text", placeholder="Name")
 			div.content-block
 				div.row
 					div.col-100
@@ -35,51 +35,53 @@ block content
 						a.button.button-fill.button-big.open-popup(href="#friendList") Select other wooishui user
 
 		div.page.cached#formSecond(data-page="form-second", data-nav="cancel")
-			div.content-block
-				div.buttons-row
-					a.button.button-big.button-fill.color-gray.active HE / SHE
-					a.button.button-big.button-fill.color-gray I
-				div.buttons-row(style="margin-top:-1px;position:relative;")
-					a.button.button-big.button-fill.color-gray.active OWN
-					a.button.button-big.button-fill.color-gray RETURNED
-				div.buttons-row(style="margin-top:-1px;position:relative;")
-					a.button.button-big.button-fill.color-gray HIM / HER
-					a.button.button-big.button-fill.color-gray.active ME
-			div.list-block
-				ul
-					li.item-content
-						div.item-inner
-							div.item-title.label AMOUNT
-							div.item-input
-								input(type="text", placeholder="AMOUNT")
-					li.item-content.align-top
-						div.item-inner
-							div.item-title.label DESCRIPTION
-							div.item-input
-								textarea(placeholder="DESCRIPTION")
-			div.content-block
-				div.row
-					div.col-100
-						a.button.button-fill.button-big.color-red(href="#") CONFIRM
+			form#debtForm(action="post")
+				div.content-block
+					div.buttons-row
+						a.debtTypeBtn.button.button-big.button-fill.color-gray.active(data-role='subject', data-value='otherUser') HE / SHE
+						a.debtTypeBtn.button.button-big.button-fill.color-gray(data-role='subject', data-value='currentUser') I
+					div.buttons-row(style="margin-top:-1px;position:relative;")
+						a.debtTypeBtn.button.button-big.button-fill.color-gray.active(data-role='verb', data-value='own') OWN
+						a.debtTypeBtn.button.button-big.button-fill.color-gray(data-role='verb', data-value='returned') RETURNED
+					div.buttons-row(style="margin-top:-1px;position:relative;")
+						a.debtTypeBtn.button.button-big.button-fill.color-gray(data-role='object', data-value='otherUser') HIM / HER
+						a.debtTypeBtn.button.button-big.button-fill.color-gray.active(data-role='object', data-value='currentUser') ME
+				div.list-block
+					ul
+						li.item-content
+							div.item-inner
+								div.item-title.label AMOUNT
+								div.item-input
+									input(type="number", placeholder="AMOUNT", name="price")
+						li.item-content.align-top
+							div.item-inner
+								div.item-title.label DESCRIPTION
+								div.item-input
+									input(type="text", placeholder="DESCRIPTION", name="desc")
+				input#otherUserID(type="hidden")
+				div.content-block
+					div.row
+						div.col-100
+							a.button.button-fill.button-big.color-red(href="#", onclick="sgd.submitDebt()") CONFIRM
 			
 block panel
 
-	div#inviteFriend.popup.page.navbar-fixed
-		div.navbar
-			div.navbar-inner
-				div.left
-				div.center Invite Friend
-				div.right 
-					a.headerBtn.black.icon-remove.close-popup(href="#")
+	//- div#inviteFriend.popup.page.navbar-fixed
+	//- 	div.navbar
+	//- 		div.navbar-inner
+	//- 			div.left
+	//- 			div.center Invite Friend
+	//- 			div.right 
+	//- 				a.headerBtn.black.icon-remove.close-popup(href="#")
 		
-		div.page-content
-			div.infinite-scroll
-				div.content-block
-					input.friendListSearch(type="text", placeholder="search", data-target="#nonRegFriend")
-				div#nonRegFriendWrapper
-					div.content-block-title FACEBOOK FRIEND LIST
-					div.list-block
-						ul#nonRegFriend
+	//- 	div.page-content
+	//- 		div.infinite-scroll
+	//- 			div.content-block
+	//- 				input.friendListSearch(type="text", placeholder="search", data-target="#nonRegFriend")
+	//- 			div#nonRegFriendWrapper
+	//- 				div.content-block-title FACEBOOK FRIEND LIST
+	//- 				div.list-block
+	//- 					ul#nonRegFriend
 
 	div#friendList.popup.page.navbar-fixed
 		div.navbar
@@ -99,16 +101,17 @@ block panel
 						ul#regFriend
 
 	script#regFriendList(type="text/template").
-		<li class="item-content">
+		<li class="item-content" data-userid='<%=id%>' class="close-popup">
 			<div class="item-media" style='background-image:url(http://graph.facebook.com/<%=id%>/picture)'></div>
 			<div class="item-inner">
 				<div class="item-title"><%=name%></div>
 			</div>
-			<input type="hidden" value="<%=id%>" class="inviteToken" />
 		</li>
 	script#mainListTmpl(type="text/template").
 		<li class="item-content">
-			<div class="item-media" style="background-image:url(http://graph.facebook.com/<%=id%>/picture)"></div>
+			<% if(id.indexOf('-') < 0){ %>
+				<div class="item-media" style="background-image:url(http://graph.facebook.com/<%=id%>/picture)"></div>
+			<% } %>
 			<div class="item-inner">
 				<div class="item-title"><%=name%></div>
 				<div class="item-label <%=(price > 0) ? 'color-green' : 'color-red'%>">$<%=price%></div>
@@ -120,10 +123,10 @@ block panel
 			<div class="item-link swipeout-content item-content">
 				<div class="item-inner">
 					<div class="item-title-row">
-						<div class="item-title"><%=moment(createdAt).format("YYYY-MM-DD HH:mm:SS")%></div>
+						<div class="item-title"><%=moment(createdAt).format("YYYY-MM-DD HH:mm")%></div>
 						<div class="item-after <%=(price > 0) ? 'color-green' : 'color-red'%>">$<%=price%></div>
 					</div>
-					<div class="item-subtitle"><%= creatorName %></div>
+					<div class="item-subtitle">Debt owner: <%= creatorName %></div>
 					<div class="item-text"><%= (typeof(desc) == 'undefined') ? 'NO DESCRIPTION' : desc %></div>
 				</div>
 			</div>

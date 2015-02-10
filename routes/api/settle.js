@@ -15,7 +15,7 @@ exports = module.exports = function(req, res) {
 			.where('creatorUID', curUser.id)
 			.exec(function(err, data){
 				if(err){
-					res.status(500).json({ error: 'api error' });
+					res.status(500).json({ error: err });
 				} else {
 					if(data){
 						data.settled = true;
