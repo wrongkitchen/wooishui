@@ -5,7 +5,10 @@ block content
 
 	div.pages
 		div.page(data-page="home")
-			div.page-content.infinite-scroll 
+			div#homeDebts.page-content.infinite-scroll.pull-to-refresh-content
+				div.pull-to-refresh-layer
+					div.preloader
+					div.pull-to-refresh-arrow
 				div.content-block-title My debts
 				div.list-block
 					ul#dataList

@@ -11,6 +11,10 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 			else
 				$("#header").removeClass();
 		});
+		$$("#homeDebts").on("refresh", function(e){
+			_sgd.debtsCredits.userRefresh = true;
+			_sgd.debtsCredits.credits.fetch();
+		});
 		_sgd.popupFriendList = new pfl({
 			wrapper: "#friendList",
 			inviteTarget: "#nonRegFriend",
