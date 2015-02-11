@@ -12,7 +12,8 @@
     "node-uuid": "^1.4.2",
     "passport": "^0.2.1",
     "passport-facebook": "^1.0.3",
-    "underscore": "~1.7.0"
+    "underscore": "~1.7.0",
+    "connect-mongo": "^0.7.0"
   },
   "devDependencies": {
     "grunt": "~0.4.4",
