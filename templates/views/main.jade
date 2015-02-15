@@ -37,15 +37,19 @@ block content
 		div.page.cached#formSecond(data-page="form-second", data-nav="cancel")
 			form#debtForm(action="post")
 				div.content-block
-					div.buttons-row
-						a.debtTypeBtn.button.button-big.button-fill.color-gray.active(data-role='subject', data-value='otherUser') HE / SHE
-						a.debtTypeBtn.button.button-big.button-fill.color-gray(data-role='subject', data-value='currentUser') I
-					div.buttons-row(style="margin-top:-1px;position:relative;")
-						a.debtTypeBtn.button.button-big.button-fill.color-gray.active(data-role='verb', data-value='own') OWN
-						a.debtTypeBtn.button.button-big.button-fill.color-gray(data-role='verb', data-value='returned') RETURNED
-					div.buttons-row(style="margin-top:-1px;position:relative;")
-						a.debtTypeBtn.button.button-big.button-fill.color-gray(data-role='object', data-value='otherUser') HIM / HER
-						a.debtTypeBtn.button.button-big.button-fill.color-gray.active(data-role='object', data-value='currentUser') ME
+					div.row.debtType
+						div.col-33.left
+							img(src="http://graph.facebook.com/#{user.id}/picture", height="50")
+						div.col-33.middle
+							div.row
+								div.col-33
+									span.icon-caret-left
+								div.col-33
+									span.icon-banknote
+								div.col-33
+									span.icon-caret-right
+						div.col-33.right 
+							img(src="http://graph.facebook.com/#{user.id}/picture", height="50")
 				div.list-block
 					ul
 						li.item-content
