@@ -21,7 +21,7 @@ define([], function(){
 					if(userID)
 						$("#otherUserID").val(userID);
 					sgd.framework7.closeModal();
-					sgd.changeSection('form-second');
+					sgd.changeSection('form-second', [], true);
 				},
 				initialize: function(options){
 					var _view = this;

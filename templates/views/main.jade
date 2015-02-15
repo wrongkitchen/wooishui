@@ -32,13 +32,13 @@ block content
 				div.content-block
 					div.row
 						div.col-100
-							a.button.button-fill.color-red.button-big(onclick="sgd.changeSection('form-second')") Enter
+							a.button.button-fill.color-red.button-big(onclick="sgd.changeSection('form-second', [], true)") Enter
 				div.content-block-label 
 					p.or or
 				div.content-block
 					div.row
 						div.col-100
-							a.button.button-fill.button-big.open-popup(href="#friendList") Select other wooishui user
+							a.button.button-fill.button-big(onclick="sgd.framework7.popup('#friendList')") Select other wooishui user
 
 		div.page.cached#formSecond(data-page="form-second", data-nav="cancel")
 			div.page-content.infinite-scroll 
@@ -73,7 +73,7 @@ block content
 					div.content-block
 						div.row
 							div.col-100
-								a.button.button-fill.button-big.color-red(href="#", onclick="sgd.submitDebt()") CONFIRM
+								a.button.button-fill.button-big.color-red(href="javascript:void(0)", onclick="sgd.submitDebt()") CONFIRM
 			
 block panel
 
@@ -100,7 +100,7 @@ block panel
 				div.left
 				div.center Friend list
 				div.right 
-					a.headerBtn.black.icon-remove.close-popup(href="#")
+					a.headerBtn.black.icon-remove(onclick="sgd.framework7.closeModal()")
 		
 		div.page-content.infinite-scroll
 			div.content-block
@@ -142,7 +142,11 @@ block panel
 			</div>
 			<% if(settlable){ %>
 				<div class="swipeout-actions-right">
-					<a href="#" data-itemid="<%=_id%>" class="settleBtn bg-red">SETTLE</a>
+					<a href="javascript:void(0)" data-itemid="<%=_id%>" class="settleBtn bg-red">REMOVE</a>
+				</div>
+			<% } else { %>
+				<div class="swipeout-actions-right">
+					<a href="javascript:void(0)" data-itemid="<%=_id%>" class="rejectBtn bg-red">REJECT</a>
 				</div>
 			<% } %>
 		</li>

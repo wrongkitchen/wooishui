@@ -3,13 +3,17 @@ define(function(){
 
 		credits: null,
 
+		creditDetail: null,
+
+		creditDetailView: null,
+
 		userUID: sgd.userUID,
 
 		userRefresh: false,
 
 		initialize: function(){
 			var _this = this;
-			var creditModel = Backbone.Model.extend({});
+			var creditModel = Backbone.Model.extend();
 			var credits = Backbone.Collection.extend({
 				model: creditModel,
 				url: '/api/debtsCredits'
@@ -22,6 +26,7 @@ define(function(){
 				model: creditModel
 			});
 			var creditsDetail = new _creditsDetail();
+			_this.creditsDetail = creditsDetail;
 			var _creditView = Backbone.View.extend({
 				el: '#dataList',
 				mainListTemplate: _.template($("#mainListTmpl").html()),
@@ -70,11 +75,7 @@ define(function(){
 				},
 				showDetail: function(e){
 					var cid = $(e.currentTarget).find('.cid').val();
-					var modelCredits = this.options.credits.where({ creditorUID : cid });
-					var modelDebts = this.options.credits.where({ debtorsUID : cid });
-					creditsDetail.reset();
-					creditsDetail.add(modelCredits.concat(modelDebts));
-					sgd.changeSection('detail');
+					sgd.changeSection('detail', [cid]);
 				}
 			});
 			var _creditDetailView = Backbone.View.extend({
@@ -85,7 +86,8 @@ define(function(){
 					this.listenTo(this.options.credits, 'all', this.render);
 				},
 				events: {
-					'click .settleBtn' : 'settleItem'
+					'click .settleBtn' : 'settleItem',
+					'click .rejectBtn' : 'rejectItem'
 				},
 				render: function(){
 					var _view = this;
@@ -111,13 +113,29 @@ define(function(){
 						success: function (data) {
 							if(data.status){
 								$("#item_" + itemID).remove();
-								_this.credits.fetch();
 							}
+						}
+					});
+				},
+				rejectItem: function(e){
+					var itemID = $(e.currentTarget).data('itemid');
+					sgd.framework7.prompt('Why do u reject this debt?', 'Reject debt', function (value) {
+						if(value != ""){
+							$.ajax({
+								url: '/api/debtsReject',
+								type: 'post',
+								data: { itemid: itemID, reason: value },
+								success: function (data) {
+									if(data.status){
+										$("#item_" + itemID).remove();
+									}
+								}
+							});
 						}
 					});
 				}
 			});
-			
+
 			var creditView = new _creditView({
 				credits: _this.credits
 			});
@@ -127,7 +145,21 @@ define(function(){
 				credits: creditsDetail
 			});
 			creditDetailView.comparator = 'createdAt';
+			_this.creditDetailView = creditDetailView;
+		},
+
+		loadDetailByUID: function(pUID){
+			var _this = this;
+			var modelCredits = _this.credits.where({ creditorUID : pUID });
+			var modelDebts = _this.credits.where({ debtorsUID : pUID });
+			_this.creditsDetail.reset();
+			_this.creditsDetail.add(modelCredits.concat(modelDebts));
+		},
+
+		clearDetailDatas: function(){
+			this.creditDetailView.$el.empty();
 		}
+
 	});
 
 	return _ctrl;

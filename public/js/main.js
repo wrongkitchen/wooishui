@@ -5,13 +5,37 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 	var $$ = Dom7;
 	var _sgd = (window.sgd) ? window.sgd : {};
 		_sgd.framework7 = new Framework7({
-			pushState: true
+			pushState: false,
+			swipeBackPage: false,
+			router: false
 		});
 		var mainView = _sgd.framework7.addView('.view-main', {
-			dynamicNavbar: true,
 			domCache: true
 		});
-		_sgd.changeSection = function(pPath){
+		var route = Backbone.Router.extend({
+			routes: {
+				"detail/:query" : "detail",
+				"home" : "home",
+				"" : "home",
+				"form" : "form"
+			},
+			detail: function(pQuery){
+				mainView.router.load({ pageName: 'detail?uid='+pQuery });
+			},
+			home: function(){
+				mainView.router.load({ pageName: 'home' });
+			},
+			form: function(){
+				mainView.router.load({ pageName: 'form' });
+			}
+		});
+		
+		_sgd.route = new route();
+		Backbone.history.start();
+
+		_sgd.debtsCredits = new dc();
+
+		_sgd.changeSection = function(pPath, pParam, pSkipHash){
 			if(pPath == 'form-second'){
 				if($('#otherUserID').val() === "" && $('#otherUserName').val() === ''){
 					_sgd.framework7.alert('Please enter a name / select a wooishui user', ['Name missing']);
@@ -22,8 +46,35 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 				$('#otherUserName').val('');
 				$('#debtForm')[0].reset();
 			}
-			mainView.router.load({ pageName: pPath });
+			var path = pPath;
+			if(Array.isArray(pParam)){
+				$.each(pParam, function(pIndex, pVal){
+					path += "/" + pVal;
+				});
+			}
+			if(pSkipHash)
+				mainView.router.load({ pageName: path });
+			else
+				window.location.hash = "#" + path;
 		};
+
+		_sgd.framework7.onPageAfterAnimation('*', function(page){
+			if(page.name == "detail" || page.name == "form"){
+				if(page.container.dataset.nav)
+					$("#header").addClass(page.container.dataset.nav);
+				else
+					$("#header").removeClass();
+			};
+			if(page.name == "detail"){
+				if(page.query.uid){
+					_sgd.debtsCredits.loadDetailByUID(page.query.uid);
+				} else {
+					window.location.hash = "";
+				}
+			} else if(page.name == "home"){
+				_sgd.debtsCredits.clearDetailDatas();
+			}
+		});
 		_sgd.framework7.onPageBeforeAnimation('*', function(page){
 			if(page.container.dataset.nav)
 				$("#header").addClass(page.container.dataset.nav);
@@ -56,7 +107,6 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 				_sgd.facebookHelper.getInvitableList(pCallback);
 			}
 		});
-		_sgd.debtsCredits = new dc();
 		_sgd.facebookHelper = new fbh(function(){
 			_sgd.debtsCredits.credits.fetch();
 		});
@@ -107,19 +157,6 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 		else 
 			$(this).addClass('creatorDebt');
 	});
-	// $('.debtTypeBtn').on('click', function(){
-	// 	if($(this).hasClass('active')) return false;
-	// 	var targetRole = $(this).data('role');
-	// 	var targetValue = $(this).data('value');
-	// 	$('.debtTypeBtn[data-role='+ targetRole +']').removeClass('active');
-	// 	$(this).addClass('active');
-	// 	if(targetRole != 'verb'){
-	// 		var otherRole = '.debtTypeBtn[data-role='+ ((targetRole == 'subject') ? 'object' : 'subject') + ']';
-	// 		var otherValue = '[data-value='+ ((targetValue == 'otherUser') ? 'currentUser' : 'otherUser') + ']';
-	// 		$(otherRole).removeClass('active');
-	// 		$(otherRole+otherValue).addClass('active');
-	// 	}
-	// });
 	$('#menu a.internal').on('click', function(){
 		_sgd.changeSection($(this).attr('href'));
 		_sgd.framework7.closePanel();
