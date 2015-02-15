@@ -5,6 +5,8 @@ define(function(){
 
 		userUID: sgd.userUID,
 
+		userRefresh: false,
+
 		initialize: function(){
 			var _this = this;
 			var creditModel = Backbone.Model.extend({});
@@ -61,6 +63,10 @@ define(function(){
 						var obj = pModel.toJSON();
 						_view.$el.append(_view.mainListTemplate(obj));
 					});
+					if(_this.userRefresh){
+						_this.userRefresh = false;
+						sgd.framework7.pullToRefreshDone();
+					}
 				},
 				showDetail: function(e){
 					var cid = $(e.currentTarget).find('.cid').val();

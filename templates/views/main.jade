@@ -3,70 +3,77 @@ extends ../layouts/default
 		
 block content
 
-	div.pages.navbar-through
+	div.pages
 		div.page(data-page="home")
-			div.content-block-title My debts
-			div.list-block
-				ul#dataList
+			div#homeDebts.page-content.infinite-scroll.pull-to-refresh-content
+				div.pull-to-refresh-layer
+					div.preloader
+					div.pull-to-refresh-arrow
+				div.content-block-title My debts
+				div.list-block
+					ul#dataList
 
 		div.page.cached(data-page="detail", data-nav="back")
-			div.content-block-title Debts detail
-			div.list-block.media-list
-				ul#dataListDetail
+			div.page-content.infinite-scroll 
+				div.content-block-title Debts detail
+				div.list-block.media-list
+					ul#dataListDetail
 
 		div.page.cached(data-page="form", data-nav="cancel")
-			div.content-block-title Create new debt
-			div.list-block
-				ul
-					li.item-content
-						div.item-inner
-							div.item-title.label Name
-							div.item-input
-								input#otherUserName(type="text", placeholder="Name")
-			div.content-block
-				div.row
-					div.col-100
-						a.button.button-fill.color-red.button-big(onclick="sgd.changeSection('form-second')") Enter
-			div.content-block-label 
-				p.or or
-			div.content-block
-				div.row
-					div.col-100
-						a.button.button-fill.button-big.open-popup(href="#friendList") Select other wooishui user
-
-		div.page.cached#formSecond(data-page="form-second", data-nav="cancel")
-			form#debtForm(action="post")
-				div.content-block
-					div.row.debtType
-						div.col-33.left
-							img(src="http://graph.facebook.com/#{user.id}/picture", height="50")
-						div.col-33.middle
-							div.row
-								div.col-33
-									span.icon-caret-left
-								div.col-33
-									span.icon-banknote
-								div.col-33
-									span.icon-caret-right
-						div.col-33.right 
-							img(src="http://graph.facebook.com/#{user.id}/picture", height="50")
+			div.page-content.infinite-scroll 
+				div.content-block-title Create new debt
 				div.list-block
 					ul
 						li.item-content
 							div.item-inner
-								div.item-title.label AMOUNT
+								div.item-title.label Name
 								div.item-input
-									input(type="number", placeholder="AMOUNT", name="price")
-						li.item-content.align-top
-							div.item-inner
-								div.item-title.label DESCRIPTION
-								div.item-input
-									input(type="text", placeholder="DESCRIPTION", name="desc")
-				input#otherUserID(type="hidden")
+									input#otherUserName(type="text", placeholder="Name")
 				div.content-block
 					div.row
 						div.col-100
-							a.button.button-fill.button-big.color-red(href="#", onclick="sgd.submitDebt()") CONFIRM
+							a.button.button-fill.color-red.button-big(onclick="sgd.changeSection('form-second')") Enter
+				div.content-block-label 
+					p.or or
+				div.content-block
+					div.row
+						div.col-100
+							a.button.button-fill.button-big.open-popup(href="#friendList") Select other wooishui user
+
+		div.page.cached#formSecond(data-page="form-second", data-nav="cancel")
+			div.page-content.infinite-scroll 
+				form#debtForm(action="post")
+					div.content-block
+						div.row.debtType
+							div.col-33.left
+								img(src="http://graph.facebook.com/#{user.id}/picture", height="50")
+							div.col-33.middle
+								div.row
+									div.col-33
+										span.icon-caret-left
+									div.col-33
+										span.icon-banknote
+									div.col-33
+										span.icon-caret-right
+							div.col-33.right 
+								img(src="http://graph.facebook.com/#{user.id}/picture", height="50")
+					div.list-block
+						ul
+							li.item-content
+								div.item-inner
+									div.item-title.label AMOUNT
+									div.item-input
+										input(type="number", placeholder="AMOUNT", name="price")
+							li.item-content.align-top
+								div.item-inner
+									div.item-title.label DESCRIPTION
+									div.item-input
+										input(type="text", placeholder="DESCRIPTION", name="desc")
+					input#otherUserID(type="hidden")
+					div.content-block
+						div.row
+							div.col-100
+								a.button.button-fill.button-big.color-red(href="#", onclick="sgd.submitDebt()") CONFIRM
 			
 block panel
 
@@ -95,14 +102,13 @@ block panel
 				div.right 
 					a.headerBtn.black.icon-remove.close-popup(href="#")
 		
-		div.page-content
-			div.infinite-scroll
-				div.content-block
-					input.friendListSearch(type="text", placeholder="search", data-target="#regFriend")
-				div#regFriendWrapper
-					div.content-block-title WOOISHUI USER
-					div.list-block
-						ul#regFriend
+		div.page-content.infinite-scroll
+			div.content-block
+				input.friendListSearch(type="text", placeholder="search", data-target="#regFriend")
+			div#regFriendWrapper
+				div.content-block-title WOOISHUI USER
+				div.list-block
+					ul#regFriend
 
 	script#regFriendList(type="text/template").
 		<li class="item-content" data-userid='<%=id%>' class="close-popup">

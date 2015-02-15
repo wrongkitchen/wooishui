@@ -6,8 +6,9 @@ html
 	//- HTML HEADER
 	head
 		meta(charset="utf-8")
-		meta(name="viewport", content="width=device-width, initial-scale=1.0")
 		meta(http-equiv="X-UA-Compatible" content="IE=edge")
+		meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui")
+		meta(name="apple-mobile-web-app-capable", content="yes")
 
 		title= title || 'wooishui'
 		link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
@@ -17,6 +18,11 @@ html
 		link(href="http://fonts.googleapis.com/css?family=Quicksand:400,700", rel="stylesheet")
 		link(href="http://fonts.googleapis.com/css?family=Lobster", rel="stylesheet")
 		link(href="/bower_components/framework7/dist/css/framework7.min.css", rel="stylesheet")
+		
+		link(rel="apple-touch-icon",href="/images/apple-touch-iphone.png")
+		link(rel="apple-touch-icon",sizes="72x72",href="/images/apple-touch-ipad.png")
+		link(rel="apple-touch-icon",sizes="120x120",href="/images/apple-touch-iphone4.png")
+		link(rel="apple-touch-icon",sizes="144x144",href="/images/apple-touch-ipad-retina.png")
 
 		link(href="/styles/site.css", rel="stylesheet")
 
@@ -78,8 +84,8 @@ html
 				block content
 
 				//- FOOTER
-				#footer
-					p Powered by <a href="http://www.sekgamdong.com" target="_blank">SEKGAMDONG CO.</a>.
+				//- #footer
+				//- 	p Powered by <a href="http://www.sekgamdong.com" target="_blank">SEKGAMDONG CO.</a>.
 
 		block panel
 

@@ -3,7 +3,8 @@ body{
 	font-family: 'Quicksand', sans-serif; font-size:$font-size-base; position:relative; 
 	&.unauthorized{ 
 		#footer{ 
-			color:#FFF; 
+			color:#FFF; text-align: center;
+			p{ border:none; }
 			a{ color:#FFF; border:none; }
 		}
 	}
