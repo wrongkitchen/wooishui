@@ -9,8 +9,6 @@ define(function(){
 
 		userUID: sgd.userUID,
 
-		userRefresh: false,
-
 		initialize: function(){
 			var _this = this;
 			var creditModel = Backbone.Model.extend();
@@ -39,38 +37,42 @@ define(function(){
 				},
 				render: function(){
 					var _view = this;
+					var _credits = _view.options.credits;
 					var allData = new Backbone.Collection();
 					_view.$el.empty();
-					_view.options.credits.each(function(credit){
-						var obj = credit.toJSON();
-						var checkDataModel = function(pObj, pIndexKey){
-							var dataModel = allData.where(pObj);
-							if(dataModel.length<=0){
-								var _name = (pIndexKey == 'debtorsUID') ? (obj.debtorsName) : (obj.creditorName);
-								allData.add({ 
-									id: obj[pIndexKey],
-									name: _name,
-									price: (pIndexKey == 'debtorsUID') ? obj.price : (obj.price * -1),
-									fbConnected: obj.fbConnected
-								});
-							} else {
-								var curPrice = dataModel[0].get('price');
-								dataModel[0].set({ price: curPrice + ((pIndexKey == 'debtorsUID') ? obj.price : (obj.price * -1)) });
+					if(_credits.length){
+						_credits.each(function(credit){
+							var obj = credit.toJSON();
+							var checkDataModel = function(pObj, pIndexKey){
+								var dataModel = allData.where(pObj);
+								if(dataModel.length<=0){
+									var _name = (pIndexKey == 'debtorsUID') ? (obj.debtorsName) : (obj.creditorName);
+									allData.add({ 
+										id: obj[pIndexKey],
+										name: _name,
+										price: (pIndexKey == 'debtorsUID') ? obj.price : (obj.price * -1),
+										fbConnected: obj.fbConnected
+									});
+								} else {
+									var curPrice = dataModel[0].get('price');
+									dataModel[0].set({ price: curPrice + ((pIndexKey == 'debtorsUID') ? obj.price : (obj.price * -1)) });
+								}
 							}
-						}
-						if(obj.creditorUID == _this.userUID){
-							checkDataModel({ id: obj.debtorsUID }, 'debtorsUID');
-						} else {
-							checkDataModel({ id: obj.creditorUID }, 'creditorUID');
-						}
-					});
-					allData.each(function(pModel){
-						var obj = pModel.toJSON();
-						_view.$el.append(_view.mainListTemplate(obj));
-					});
-					if(_this.userRefresh){
-						_this.userRefresh = false;
-						sgd.framework7.pullToRefreshDone();
+							if(obj.creditorUID == _this.userUID){
+								checkDataModel({ id: obj.debtorsUID }, 'debtorsUID');
+							} else {
+								checkDataModel({ id: obj.creditorUID }, 'creditorUID');
+							}
+						});
+						allData.each(function(pModel){
+							var obj = pModel.toJSON();
+							_view.$el.append(_view.mainListTemplate(obj));
+						});
+						$('#dataListError').hide();
+						$('#dataListWrap').show()
+					} else {
+						$('#dataListError').show();
+						$('#dataListWrap').hide()
 					}
 				},
 				showDetail: function(e){
@@ -80,6 +82,8 @@ define(function(){
 			});
 			var _creditDetailView = Backbone.View.extend({
 				el: '#dataListDetail',
+				errEl: '#dataListDetailError',
+				wrapper: '#dataListDetailWrap',
 				detailTemplate: _.template($("#detailTmpl").html()),
 				initialize: function(options){
 					this.options = options;
@@ -106,13 +110,17 @@ define(function(){
 				},
 				settleItem: function(e){
 					var itemID = $(e.currentTarget).data('itemid');
+					var _view  = this;
+					var _credits = _view.options.credits;
 					$.ajax({
 						url: '/api/debtsSettle',
 						type: 'post',
 						data: { itemid: itemID },
 						success: function (data) {
 							if(data.status){
-								$("#item_" + itemID).remove();
+								_credits.remove(_credits.where({ _id:itemID }));
+								if(_credits.length <= 0)
+									sgd.changeSection('home');
 							}
 						}
 					});
@@ -153,7 +161,14 @@ define(function(){
 			var modelCredits = _this.credits.where({ creditorUID : pUID });
 			var modelDebts = _this.credits.where({ debtorsUID : pUID });
 			_this.creditsDetail.reset();
-			_this.creditsDetail.add(modelCredits.concat(modelDebts));
+			if(modelCredits.length || modelDebts.length){
+				_this.creditsDetail.add(modelCredits.concat(modelDebts));
+				$(_this.creditDetailView.wrapper).show();
+				$(_this.creditDetailView.errEl).hide();
+			} else {
+				$(_this.creditDetailView.errEl).show();
+				$(_this.creditDetailView.wrapper).hide();
+			}
 		},
 
 		clearDetailDatas: function(){

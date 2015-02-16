@@ -45,6 +45,7 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 				$('#otherUserID').val('');
 				$('#otherUserName').val('');
 				$('#debtForm')[0].reset();
+				_sgd.debtsCredits.credits.fetch();
 			}
 			var path = pPath;
 			if(Array.isArray(pParam)){
@@ -93,8 +94,12 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 			}
 		});
 		$$("#homeDebts").on("refresh", function(e){
-			_sgd.debtsCredits.userRefresh = true;
-			_sgd.debtsCredits.credits.fetch();
+			_sgd.debtsCredits.credits.fetch({
+				reset: true,
+				complete: function(){
+					sgd.framework7.pullToRefreshDone();
+				}
+			});
 		});
 		_sgd.popupFriendList = new pfl({
 			wrapper: "#friendList",
@@ -126,7 +131,6 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 					success: function (data) {
 						if(data.status){
 							_sgd.changeSection('home');
-							_sgd.debtsCredits.credits.fetch();
 						}
 					}
 				});

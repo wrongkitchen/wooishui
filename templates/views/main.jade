@@ -9,15 +9,23 @@ block content
 				div.pull-to-refresh-layer
 					div.preloader
 					div.pull-to-refresh-arrow
-				div.content-block-title My debts
-				div.list-block
-					ul#dataList
+				div.content-block-title#dataListError 
+					span.icon-page-search
+					div.txt Cannot find any debt
+				div#dataListWrap
+					div.content-block-title My debts
+					div.list-block
+						ul#dataList
 
 		div.page.cached(data-page="detail", data-nav="back")
 			div.page-content.infinite-scroll 
-				div.content-block-title Debts detail
-				div.list-block.media-list
-					ul#dataListDetail
+				div.content-block-title#dataListDetailError 
+					span.icon-page-search
+					div.txt Cannot find any debt of this user
+				div#dataListDetailWrap
+					div.content-block-title Debts detail
+					div.list-block.media-list
+						ul#dataListDetail
 
 		div.page.cached(data-page="form", data-nav="cancel")
 			div.page-content.infinite-scroll 
@@ -128,6 +136,8 @@ block panel
 			</div>
 			<input type="hidden" class="cid" value="<%=id%>"></input>
 		</li>
+	script#emptyDetail(type="text/template").
+		<div class="list-block-label">it is empty</div>
 	script#detailTmpl(type="text/template").
 		<li class="swipeout" id="item_<%=_id%>">
 			<div class="item-link swipeout-content item-content">
