@@ -1,12 +1,2 @@
-node_modules
-*.log
+.codekit-cache
 *.DS_Store
-
-.ftppass
-public/bower_components
-public/styles/*.css
-.tmp
-.grunt
-.sublime-grunt.cache
-.env
-.sass-cache
