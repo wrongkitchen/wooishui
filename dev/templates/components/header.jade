@@ -1,0 +1,14 @@
+mixin navbar(type)
+	div.navbar.root
+		div.navbar-inner
+			div.left
+				if type == 'cancel'
+					a#cancelBtn.headerBtn.txt(onclick="sgd.changeSection('home')") Cancel
+				if type == 'back'
+					a#backBtn.headerBtn.txt(onclick="sgd.changeSection('home')") Back
+				if type == 'add'
+					a#addBtn.icon-plus.headerBtn.active(onclick="sgd.changeSection('form')")
+			div.center
+				div.logo wooishui
+			div.right
+				a.headerBtn.menu-link.icon-share-square(href="javascript:void(0)")

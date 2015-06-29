@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.sgd.wooishui" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>wooishui</name>
+    <description>
+        wooishui - debt collector
+    </description>
+    <author email="kenji@sekgamdong.com" href="http://www.sekgamdong.com">
+        SEKGAMDONG CO.
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <access origin="*.pushwoosh.com" />
+    <gap:plugin name="com.pushwoosh.plugins.pushwoosh" source="plugins.cordova.io" />
+    <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.11.0">
+        <param name="APP_ID" value="1386483598265163" />
+        <param name="APP_NAME" value="wooishui" />
+    </gap:plugin>
+</widget>

@@ -1,0 +1,26 @@
+//- Base template
+//- All other templates should extend from this
+
+doctype html
+html(lang='en')
+    head
+        include ../components/meta.jade
+    body
+        div#layout.views
+            div.view.view-main
+
+                block content
+
+        include ../components/panel.jade
+
+        include ../components/tmpl.jade
+
+        script.
+            window.sgd = (window.sgd) ? window.sgd : {};
+            window.sgd.fbAppID = '1386483598265163';
+            window.sgd.apiPrefix = 'http://localhost:3000';
+
+        script(src='cordova.js')
+        script(src='cordova_plugins.js')
+            
+        script(src='scripts/main.js')

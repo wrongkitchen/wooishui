@@ -1,0 +1,19 @@
+extends ./layouts/base
+include components/header.jade
+
+block content
+
+	div.pages
+		
+		div.page#beforeLogin(data-page="login")
+			div.page-content
+				div.loginLogo wooishui
+				div.facebookLogin
+
+		include pages/home.jade
+
+		include pages/detail.jade
+
+		include pages/form.jade
+
+		include pages/form-second.jade
