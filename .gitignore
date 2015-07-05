@@ -1,3 +1,4 @@
 .codekit-cache
 *.DS_Store
 dev/bower_components
+.sass-cache
