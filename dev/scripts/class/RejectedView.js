@@ -39,7 +39,7 @@ define('RejectedView', function(){
 			$.ajax({
 				url: sgd.apiPrefix + '/api/debtsAccept',
 				dataType: 'jsonp',
-				data: { itemid: itemID, uid: sgd.userUID },
+				data: { itemid: itemID, uid: sgd.userUID, accessToken: sgd.accessToken },
 				success: function (data) {
 					if(data.status){
 						var _remove = _credits.remove(_credits.where({ _id:itemID }));

@@ -54,7 +54,7 @@ define('CreditDetailView', function(){
 			$.ajax({
 				url: sgd.apiPrefix + '/api/debtsRemove',
 				dataType: 'jsonp',
-				data: { itemid: itemID, uid: sgd.userUID },
+			data: { itemid: itemID, uid: sgd.userUID, accessToken: sgd.accessToken },
 				success: function (data) {
 					if(data.status){
 						var removed = _credits.where({ _id: itemID });
@@ -81,7 +81,7 @@ define('CreditDetailView', function(){
 						url: sgd.apiPrefix + '/api/debtsReject',
 						type: 'get',
 						dataType: 'jsonp',
-						data: { itemid: itemID, reason: value, uid: sgd.userUID },
+						data: { itemid: itemID, reason: value, uid: sgd.userUID, accessToken: sgd.accessToken },
 						success: function (data) {
 							if(data.status){
 								sgd.framework7.swipeoutDelete('#item_' + itemID, function(a,b,c){

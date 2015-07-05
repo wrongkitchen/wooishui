@@ -1,17 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.sgd.wooishui" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <preference name="AllowInlineMediaPlayback" value="false" />
-    <preference name="AutoHideSplashScreen" value="true" />
     <preference name="BackupWebStorage" value="cloud" />
     <preference name="DisallowOverscroll" value="false" />
     <preference name="EnableViewportScale" value="false" />
-    <preference name="FadeSplashScreen" value="true" />
-    <preference name="FadeSplashScreenDuration" value=".25" />
     <preference name="KeyboardDisplayRequiresUserAction" value="true" />
     <preference name="MediaPlaybackRequiresUserAction" value="false" />
-    <preference name="ShowSplashScreenSpinner" value="true" />
     <preference name="SuppressesIncrementalRendering" value="false" />
-    <preference name="TopActivityIndicator" value="gray" />
     <preference name="GapBetweenPages" value="0" />
     <preference name="PageLength" value="0" />
     <preference name="PaginationBreakingMode" value="page" />
@@ -29,8 +24,17 @@
     <access origin="https://api.facebook.com" />
     <access origin="https://*.fbcdn.net" />
     <access origin="https://*.akamaihd.net" />
-    <feature name="PushNotification">
-        <param name="ios-package" value="PushNotification" />
+    <feature name="Console">
+        <param name="ios-package" value="CDVLogger" />
+    </feature>
+    <feature name="PushPlugin">
+        <param name="ios-package" value="PushPlugin" />
+    </feature>
+    <feature name="Notification">
+        <param name="ios-package" value="CDVNotification" />
+    </feature>
+    <feature name="Vibration">
+        <param name="ios-package" value="CDVVibration" />
     </feature>
     <name>wooishui</name>
     <description>
@@ -41,8 +45,6 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-    <access origin="*.pushwoosh.com" />
-    <gap:plugin name="com.pushwoosh.plugins.pushwoosh" source="plugins.cordova.io" />
     <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.11.0">
         <param name="APP_ID" value="1386483598265163" />
         <param name="APP_NAME" value="wooishui" />

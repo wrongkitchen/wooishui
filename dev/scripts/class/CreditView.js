@@ -31,7 +31,8 @@ define('CreditView', function(){
 								id: obj[pIndexKey],
 								name: _name,
 								price: (obj.reject) ? 0 : _price,
-								rejected: !!(obj.reject)
+								rejected: !!(obj.reject),
+								withoutSocial: obj.withoutSocial
 							});
 						} else {
 							var curPrice = dataModel[0].get('price');
@@ -58,7 +59,8 @@ define('CreditView', function(){
 		},
 		showDetail: function(e){
 			var cid = $(e.currentTarget).find('.cid').val();
-			sgd.changeSection('detail', { uid: cid });
+			var withoutSocial = $(e.currentTarget).find('.withoutSocial').val();
+			sgd.changeSection('detail', { uid: cid, withoutSocial: withoutSocial });
 		}
 	});
 });

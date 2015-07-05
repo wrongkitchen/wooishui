@@ -1,10 +1,10 @@
 'use strict';
 
 // @codekit-prepend "../bower_components/jquery/dist/jquery.js";
-// @codekit-prepend "../bower_components/underscore/underscore-min.js";
+// @codekit-prepend "../bower_components/underscore/underscore.js";
 // @codekit-prepend "../bower_components/backbone/backbone.js";
-// @codekit-prepend "../bower_components/momentjs/min/moment.min.js";
-// @codekit-prepend "../bower_components/framework7/dist/js/framework7.min.js";
+// @codekit-prepend "../bower_components/momentjs/moment.js";
+// @codekit-prepend "../bower_components/framework7/dist/js/framework7.js";
 // @codekit-prepend "../bower_components/requirejs/require.js";
 // @codekit-prepend "class/CreditDetailView.js";
 // @codekit-prepend "class/NotificationHandler.js";
@@ -34,12 +34,19 @@ require([
 	
 	var $$ = Dom7, _sgd = (window.sgd) ? window.sgd : {};
 
-	_sgd.notification = new nh();
 	_sgd.accessToken = window.localStorage.getItem('at');
 	_sgd.userUID = window.localStorage.getItem('uid');
+
+	_sgd.notification = new nh();
 	_sgd.framework7 = new Framework7();
 	_sgd.mainView = _sgd.framework7.addView('.view-main', { domCache: true });
-
+	_sgd.pageList = {
+		login: new pageLogin(),
+		home: new pageHome(),
+		detail: new pageDetail(),
+		form: new pageForm(),
+		'form-second': new pageFormSecond()
+	};
 	_sgd.resetForm = function(){
 		$('#otherUserID').val('');
 		$('#otherUserName').val('');
@@ -47,7 +54,47 @@ require([
 		$("#debtForm input[name=callback]").val('');
 		$('#debtForm')[0].reset();
 	};
+	_sgd.init = function(){
+		if(_sgd.debtsCredits){
+			_sgd.debtsCredits.credits.fetchDatas();
+		} else {
+			_sgd.debtsCredits = new dc();
+		}
+		if(_sgd.accessToken && _sgd.userUID){
 
+			$('.userImageContain').html('<img src="http://graph.facebook.com/' + _sgd.userUID + '/picture" height="50" alt="" />');
+
+			_sgd.changeSection('home');
+
+			_sgd.notification.registerDevice(function(_deviceToken){
+				if(_deviceToken){
+					_sgd.deviceToken = _deviceToken;
+				}
+				_sgd.facebookHelper.getPersonalData(function(fbdata){
+					$.ajax({
+						url: _sgd.apiPrefix + '/api/login',
+						dataType: 'jsonp',
+						data: { 
+							uid: _sgd.userUID, 
+							accessToken: _sgd.accessToken, 
+							deviceToken: _sgd.notification.getDeviceToken(),
+							facebook: fbdata
+						},
+						success: function(pResult){
+							if(!pResult.status){
+								_sgd.framework7.alert('Login error', ['Access Token & Facebook UID invaild']);
+								logoutToLogin();
+							} 
+						}
+					});
+				});
+			});
+
+		} else {
+			_sgd.framework7.alert('Login error', ['Access Token & Facebook UID invaild']);
+			_sgd.changeSection('login');
+		}
+	};
 	_sgd.changeSection = function(pPath, pParam){
 		if(_sgd.pageList[pPath]) {
 			_sgd.pageList[pPath].onShow(pParam, function(){
@@ -67,7 +114,6 @@ require([
 		if(_sgd.pageList[from]) _sgd.pageList[from].hide(page);
 		if(_sgd.pageList[path]) _sgd.pageList[path].beforeShow(page);
 	});
-
 	_sgd.popupFriendList = new pfl({
 		wrapper: '#friendList',
 		inviteTarget: '#nonRegFriend',
@@ -90,7 +136,8 @@ require([
 			otherUserID: $('#otherUserID').val(),
 			otherUserName: $('#otherUserName').val(),
 			itemid: $("#debtForm input[name=itemid]").val(),
-			curUser: sgd.userUID
+			uid: sgd.userUID,
+			accessToken: sgd.accessToken
 		};
 		if(_q.price != ''){
 			$.ajax({
@@ -101,34 +148,28 @@ require([
 					if(data.status){
 						if($('#debtForm input[name=callback]').val() != ''){
 							_sgd.debtsCredits.credits.fetchDatas();
-							Backbone.history.loadUrl(Backbone.history.fragment);
+							_sgd.changeSection('detail', { uid: $('#debtForm input[name=callback]').val() });
 							_sgd.resetForm();
 						} else {
 							_sgd.changeSection('home');
 						}
 					}
+				},
+				error: function(e){
+					console.log(e);
 				}
 			});
 		} else {
 			sgd.framework7.alert('Please fill in an amount', ['Amount missing']);
 		}
 	};
-	
-	_sgd.pageList = {
-		login: new pageLogin(),
-		home: new pageHome(),
-		detail: new pageDetail(),
-		form: new pageForm(),
-		'form-second': new pageFormSecond()
+	var logoutToLogin = function(){
+		_sgd.accessToken = '';
+		_sgd.userUID = '';
+		window.localStorage.setItem('at', '');
+		window.localStorage.setItem('uid', '');
+		_sgd.changeSection('login');
 	};
-
-	if(_sgd.accessToken && _sgd.userUID){
-		_sgd.debtsCredits = new dc();
-		$('.userImageContain').html('<img src="http://graph.facebook.com/' + _sgd.userUID + '/picture" height="50" alt="" />');
-	} else {
-		window.location.href = "index.html";
-	}
-
 	$$('.menu-link').on('click', function () {
 		var buttons = [
 			{
@@ -148,9 +189,7 @@ require([
 				text: 'Sign Out',
 				onClick: function () {
 					facebookConnectPlugin.logout(function(){
-						window.localStorage.setItem("at", '');
-						window.localStorage.setItem("uid", '');
-						window.location.href = 'index.html';
+						logoutToLogin();
 					}, function(){
 						_sgd.framework7.alert('Logout fail', ['Please try again']);
 					});

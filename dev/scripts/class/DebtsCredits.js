@@ -23,7 +23,7 @@ define('DebtsCredits', ['CreditView', 'CreditDetailView', 'RejectedView'], funct
 			_this.credits.fetchDatas = function(pSetting){
 				this.fetch(_.extend({ 
 					dataType: 'jsonp', 
-					data:{ uid: sgd.userUID } 
+					data:{ uid: sgd.userUID, accessToken: sgd.accessToken } 
 				}, pSetting));
 			};
 			_this.credits.fetchDatas();

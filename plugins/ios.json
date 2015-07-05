@@ -9,42 +9,34 @@
                 "parents": {
                     "libsqlite3.dylib": [
                         {
-                            "xml": "false",
+                            "xml": false,
                             "count": 1
                         }
                     ],
                     "Social.framework": [
                         {
-                            "xml": "true",
+                            "xml": true,
                             "count": 1
                         }
                     ],
                     "Accounts.framework": [
                         {
-                            "xml": "true",
+                            "xml": true,
                             "count": 1
                         }
                     ],
                     "Security.framework": [
                         {
-                            "xml": "true",
-                            "count": 1
-                        },
-                        {
-                            "xml": "false",
+                            "xml": true,
                             "count": 1
                         }
                     ],
-                    "Storekit.framework": [
+                    "Storekit.framework": [],
+                    "CoreLocation.framework": [],
+                    "AudioToolbox.framework": [
                         {
-                            "xml": "false",
-                            "count": 1
-                        }
-                    ],
-                    "CoreLocation.framework": [
-                        {
-                            "xml": "false",
-                            "count": 1
+                            "xml": true,
+                            "count": 2
                         }
                     ]
                 }
@@ -81,7 +73,19 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"PushNotification\"><param name=\"ios-package\" value=\"PushNotification\" /></feature>",
+                            "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"PushPlugin\"><param name=\"ios-package\" value=\"PushPlugin\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Notification\"><param name=\"ios-package\" value=\"CDVNotification\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Vibration\"><param name=\"ios-package\" value=\"CDVVibration\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -111,12 +115,7 @@
             },
             "undefined": {
                 "parents": {
-                    "undefined": [
-                        {
-                            "xml": "<access origin=\"*.pushwoosh.com\" />",
-                            "count": 1
-                        }
-                    ]
+                    "undefined": []
                 }
             }
         }
@@ -127,7 +126,16 @@
             "APP_NAME": "wooishui",
             "PACKAGE_NAME": "com.sgd.wooishui"
         },
-        "com.pushwoosh.plugins.pushwoosh": {
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.sgd.wooishui"
+        },
+        "com.phonegap.plugins.PushPlugin": {
+            "PACKAGE_NAME": "com.sgd.wooishui"
+        },
+        "org.apache.cordova.dialogs": {
+            "PACKAGE_NAME": "com.sgd.wooishui"
+        },
+        "org.apache.cordova.vibration": {
             "PACKAGE_NAME": "com.sgd.wooishui"
         }
     },

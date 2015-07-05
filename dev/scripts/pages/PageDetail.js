@@ -13,7 +13,7 @@ define('PageDetail', ['PageBase'], function(pb){
 						$.ajax({
 							url: _sgd.apiPrefix + '/api/connectUser',
 							dataType: 'jsonp',
-							data: { from: fromUID, to:pToUID, uid: sgd.userUID },
+							data: { from: fromUID, to:pToUID, uid: _sgd.userUID, accessToken: _sgd.accessToken },
 							success: function (data) {
 								if(data.status){
 									_sgd.changeSection('home');
@@ -53,15 +53,15 @@ define('PageDetail', ['PageBase'], function(pb){
 			});
 		},
 		beforeShow: function(page){
-			if(page.query.uid.indexOf('-') > -1){
+			if(page.query.withoutSocial === 'true'){
 				$('#connectUser').show().data('uid', page.query.uid);
-			} else{
+			} else {
 				$('#connectUser').hide().data('uid', '');
 			}
 		},
 		afterShow: function(page){
 			if(page.query.uid){
-				if(page.query.uid.indexOf('-') > -1){
+				if(page.query.withoutSocial === 'true'){
 					$('#connectUser').show().data('uid', page.query.uid);
 				} else{
 					$('#connectUser').hide().data('uid', '');

@@ -8,7 +8,7 @@ script#regFriendList(type="text/template").
 
 script#mainListTmpl(type="text/template").
 	<li class="item-content <%= (rejected) ? 'rejected' : '' %>">
-		<% if(id.indexOf('-') < 0){ %>
+		<% if(!withoutSocial){ %>
 			<div class="item-media" style="background-image:url(http://graph.facebook.com/<%=id%>/picture)"></div>
 		<% } %>
 		<div class="item-inner">
@@ -16,6 +16,7 @@ script#mainListTmpl(type="text/template").
 			<div class="item-label <%=(price > 0) ? 'color-green' : 'color-red'%>">$<%= (price % 1)? price.toFixed(2) : price %></div>
 		</div>
 		<input type="hidden" class="cid" value="<%=id%>"></input>
+		<input type="hidden" class="withoutSocial" value="<%=withoutSocial%>"></input>
 	</li>
 
 script#emptyDetail(type="text/template").

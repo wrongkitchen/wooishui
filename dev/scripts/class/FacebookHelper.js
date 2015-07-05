@@ -1,6 +1,7 @@
 'use strict';
 
 define('FacebookHelper', function(){
+
 	return Backbone.Model.extend({
 
 		initialize: function(){
@@ -25,6 +26,14 @@ define('FacebookHelper', function(){
 			}
 		},
 
+		getPersonalData: function(pCallback){
+			FB.api('/me', {
+				access_token : sgd.accessToken
+			}, function(response) {
+ 				pCallback(response);
+			});
+		},
+
 		getFriendList: function(pCallback){
 			FB.api('/me/friends', {
 				access_token : sgd.accessToken
@@ -34,9 +43,9 @@ define('FacebookHelper', function(){
 		},
 		getInvitableList: function(pCallback){
 			FB.api('/me/taggable_friends', {
-					access_token : sgd.accessToken
-				}, function(response) {
- 				pCallback(response);
+				access_token : sgd.accessToken
+			}, function(response) {
+				pCallback(response);
 			});
 		}
 	});

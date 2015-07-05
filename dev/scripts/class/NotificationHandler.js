@@ -2,6 +2,8 @@
 
 define('NotificationHandler', function(){
 
+	var _sgd = (window.sgd) ? window.sgd : {};
+
 	var pushNotification = null;
 
 	var deviceToken = null;
@@ -14,32 +16,42 @@ define('NotificationHandler', function(){
 
 		initialize: function(){
 
-			document.addEventListener('deviceready', function(){
-	
-				pushNotification = cordova.require("com.pushwoosh.plugins.pushwoosh.PushNotification");
-				
-				pushNotification.onDeviceReady({ pw_appid:"01C24-D0542" });
+			window.onNotification = function(event) {
+				if(event.foreground === "0"){
+					_sgd.changeSection('detail', { uid: event.messageFrom });
+				} else if(event.foreground === "1"){
+					_sgd.framework7.alert(event.alert, 'wooishui', function(){
+						_sgd.changeSection('detail', { uid: event.messageFrom });
+					});
+				}
+				_sgd.debtsCredits.credits.fetchDatas({ reset: true });
+				if (event.badge){
+					pushNotification.setApplicationIconBadgeNumber(function(){
 
-				pushNotification.registerDevice(
-					function(status) {
-						deviceToken = status['deviceToken'];
-						console.warn('registerDevice: ' + deviceToken);
-					},
-					function(status) {
-						console.warn('failed to register : ' + JSON.stringify(status));
-						console.log(JSON.stringify(['failed to register ', status]));
-					}
-				);
+					}, function(){
 
-				document.addEventListener('push-notification', function(event) {
-					var notification = event.notification;
-					alert(notification.aps.alert);
-					pushNotification.setApplicationIconBadgeNumber(0);
+					}, event.badge);
+				}
+			}
+			
+		},
+
+		registerDevice: function(pCallback){
+
+				pushNotification = window.plugins.pushNotification;
+
+				pushNotification.register(
+					function(result){
+						deviceToken = result;
+						if(pCallback) pCallback(result);
+					}, function(result){
+						if(pCallback) pCallback(result);
+					}, {
+						"badge":"true",
+						"sound":"true",
+						"alert":"true",
+						"ecb":"onNotification"
 				});
-				 
-				pushNotification.setApplicationIconBadgeNumber(0);
-
-			}, false);
 
 		}
 

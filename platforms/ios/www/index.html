@@ -26,7 +26,7 @@
                 <div class="center">
                   <div class="logo">wooishui</div>
                 </div>
-                <div class="right"><a href="javascript:void(0)" class="headerBtn menu-link icon-share-square"></a></div>
+                <div class="right"><a href="#" class="headerBtn menu-link icon-share-square"></a></div>
               </div>
             </div>
             <div id="homeDebts" class="page-content infinite-scroll pull-to-refresh-content">
@@ -53,7 +53,7 @@
                 <div class="center">
                   <div class="logo">wooishui</div>
                 </div>
-                <div class="right"><a href="javascript:void(0)" class="headerBtn menu-link icon-share-square"></a></div>
+                <div class="right"><a href="#" class="headerBtn menu-link icon-share-square"></a></div>
               </div>
             </div>
             <div class="page-content infinite-scroll"> 
@@ -86,7 +86,7 @@
                 <div class="center">
                   <div class="logo">wooishui</div>
                 </div>
-                <div class="right"><a href="javascript:void(0)" class="headerBtn menu-link icon-share-square"></a></div>
+                <div class="right"><a href="#" class="headerBtn menu-link icon-share-square"></a></div>
               </div>
             </div>
             <div class="page-content infinite-scroll"> 
@@ -126,7 +126,7 @@
                 <div class="center">
                   <div class="logo">wooishui</div>
                 </div>
-                <div class="right"><a href="javascript:void(0)" class="headerBtn menu-link icon-share-square"></a></div>
+                <div class="right"><a href="#" class="headerBtn menu-link icon-share-square"></a></div>
               </div>
             </div>
             <div class="page-content infinite-scroll"> 
@@ -169,7 +169,7 @@
                 <input id="otherUserID" type="hidden">
                 <div class="content-block">
                   <div class="row">
-                    <div class="col-100"><a href="javascript:void(0)" onclick="sgd.submitDebt()" class="button button-fill button-big color-red">CONFIRM</a></div>
+                    <div class="col-100"><a href="#" onclick="sgd.submitDebt()" class="button button-fill button-big color-red">CONFIRM</a></div>
                   </div>
                 </div>
               </form>
@@ -231,7 +231,7 @@
     </script>
     <script id="mainListTmpl" type="text/template">
       <li class="item-content <%= (rejected) ? 'rejected' : '' %>">
-      	<% if(id.indexOf('-') < 0){ %>
+      	<% if(!withoutSocial){ %>
       		<div class="item-media" style="background-image:url(http://graph.facebook.com/<%=id%>/picture)"></div>
       	<% } %>
       	<div class="item-inner">
@@ -239,6 +239,7 @@
       		<div class="item-label <%=(price > 0) ? 'color-green' : 'color-red'%>">$<%= (price % 1)? price.toFixed(2) : price %></div>
       	</div>
       	<input type="hidden" class="cid" value="<%=id%>"></input>
+      	<input type="hidden" class="withoutSocial" value="<%=withoutSocial%>"></input>
       </li>
       
     </script>
@@ -297,7 +298,7 @@
     <script>
       window.sgd = (window.sgd) ? window.sgd : {};
       window.sgd.fbAppID = '1386483598265163';
-      window.sgd.apiPrefix = 'http://localhost:3000';
+      window.sgd.apiPrefix = 'http://192.168.1.101:3000';
       
     </script>
     <script src="cordova.js"></script>
