@@ -34355,7 +34355,7 @@ require([
 	_sgd.userUID = window.localStorage.getItem('uid');
 
 	_sgd.notification = new nh();
-	_sgd.framework7 = new Framework7();
+	_sgd.framework7 = new Framework7({ swipeBackPage: false });
 	_sgd.mainView = _sgd.framework7.addView('.view-main', { domCache: true });
 	_sgd.pageList = {
 		login: new pageLogin(),
@@ -34513,7 +34513,6 @@ require([
 				}
 			}
 		];
-		
 		_sgd.framework7.actions(buttons);
 	});
 	$("#dataListDetailWrap .icon-plus").on('click', function(){
