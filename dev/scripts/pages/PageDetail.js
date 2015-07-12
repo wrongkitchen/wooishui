@@ -75,7 +75,6 @@ define('PageDetail', ['PageBase'], function(pb){
 		},
 		onShow: function(pParam, next){
 			_sgd.resetForm();
-			_sgd.debtsCredits.credits.fetchDatas();
 
 			next();
 		}

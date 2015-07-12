@@ -13,7 +13,6 @@ define('FacebookHelper', function(){
 						xfbml      : true,
 						version    : 'v2.2'
 					});
-					FB.getLoginStatus();
 				};
 
 				(function(d, s, id){

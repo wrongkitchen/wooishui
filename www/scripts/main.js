@@ -33113,8 +33113,6 @@ define('DebtsCredits', ['CreditView', 'CreditDetailView', 'RejectedView'], funct
 					data:{ uid: sgd.userUID, accessToken: sgd.accessToken } 
 				}, pSetting));
 			};
-			_this.credits.fetchDatas();
-
 
 			var creditsDetail = new Backbone.Collection();
 				creditsDetail.comparator = 'createdAt';
@@ -33232,7 +33230,6 @@ define('FacebookHelper', function(){
 						xfbml      : true,
 						version    : 'v2.2'
 					});
-					FB.getLoginStatus();
 				};
 
 				(function(d, s, id){
@@ -33479,7 +33476,9 @@ define('PageLogin', ['PageBase'], function(pb){
 								_sgd.init();
 							}
 						},
-						function (error) { alert('' + error); }
+						function (error) { 
+							_sgd.framework7.alert('Login error', ['Please try again']);
+						}
 					);
 				});
 				
@@ -33614,7 +33613,6 @@ define('PageDetail', ['PageBase'], function(pb){
 		},
 		onShow: function(pParam, next){
 			_sgd.resetForm();
-			_sgd.debtsCredits.credits.fetchDatas();
 
 			next();
 		}

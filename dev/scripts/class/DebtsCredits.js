@@ -26,8 +26,6 @@ define('DebtsCredits', ['CreditView', 'CreditDetailView', 'RejectedView'], funct
 					data:{ uid: sgd.userUID, accessToken: sgd.accessToken } 
 				}, pSetting));
 			};
-			_this.credits.fetchDatas();
-
 
 			var creditsDetail = new Backbone.Collection();
 				creditsDetail.comparator = 'createdAt';

@@ -27,7 +27,9 @@ define('PageLogin', ['PageBase'], function(pb){
 								_sgd.init();
 							}
 						},
-						function (error) { alert('' + error); }
+						function (error) { 
+							_sgd.framework7.alert('Login error', ['Please try again']);
+						}
 					);
 				});
 				
