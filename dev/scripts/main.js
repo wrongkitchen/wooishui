@@ -5,6 +5,7 @@
 // @codekit-prepend "../bower_components/backbone/backbone.js";
 // @codekit-prepend "../bower_components/momentjs/moment.js";
 // @codekit-prepend "../bower_components/framework7/dist/js/framework7.js";
+// @codekit-prepend "../bower_components/framework7-keypad/dist/framework7.keypad.js";
 // @codekit-prepend "../bower_components/requirejs/require.js";
 // @codekit-prepend "class/CreditDetailView.js";
 // @codekit-prepend "class/NotificationHandler.js";
